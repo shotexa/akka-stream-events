@@ -5,5 +5,4 @@ addCommandAlias(
 addCommandAlias("cd", "project")
 addCommandAlias("ls", "projects")
 addCommandAlias("ll", "projects")
-addCommandAlias("run", "main/run")
-addCommandAlias("gen", "bet-history/g8Scaffold")
+addCommandAlias("gen", "root/g8Scaffold")

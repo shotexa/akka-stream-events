@@ -1,14 +1,16 @@
 package eu.bluelabs
 package services
 
-import entities._
-import eventSources.EventSourcesApi
+import scala.concurrent.ExecutionContext.Implicits._
+import scala.concurrent.Future
+import scala.util.Failure
+import scala.util.Success
+
 import akka.actor.ActorSystem
 import akka.stream.scaladsl._
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext.Implicits._
-import scala.util.Success
-import scala.util.Failure
+
+import entities._
+import eventSources.EventSourcesApi
 
 class BetEventListenerService private (
     betService: BetServiceApi,

@@ -27,10 +27,8 @@ object BetRepository extends Repository[Bet] {
       }
     }
 
-  override def getMany(
-      limit: Int
-    ): Future[Either[Throwable, Set[Bet]]] = Future {
-    Right(bets.get.values.take(limit).toSet)
+  override def getMany: Future[Either[Throwable, Set[Bet]]] = Future {
+    Right(bets.get.values.toSet)
   }
 
   override def createOne(

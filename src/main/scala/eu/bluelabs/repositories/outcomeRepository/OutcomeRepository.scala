@@ -32,9 +32,7 @@ object OutcomeRepository extends Repository[Outcome] {
       }
     }
 
-  override def getMany(
-      limit: Int
-    ): Future[Either[Throwable, Set[Outcome]]] = ???
+  override def getMany: Future[Either[Throwable, Set[Outcome]]] = ???
 
   override def createOne(
       item: Outcome

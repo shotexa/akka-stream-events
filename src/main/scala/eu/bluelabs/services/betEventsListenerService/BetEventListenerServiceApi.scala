@@ -1,9 +1,10 @@
 package eu.bluelabs
 package services
 
+import akka.actor.ActorSystem
+
 import eventSources.EventSourcesApi
 import entities._
-import akka.actor.ActorSystem
 
 trait BetEventListenerServiceApi {
   def startListeningTo(

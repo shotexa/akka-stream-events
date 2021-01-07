@@ -33,7 +33,7 @@ class BetService private (db: Repository[Bet]) extends BetServiceApi {
   }
 
   override def getAllBets: Future[Either[BetServiceError, Set[Bet]]] =
-    db.getMany().map {
+    db.getMany.map {
       case Left(err)   => Left(BetServiceError(err.getMessage, Some(err)))
       case Right(bets) => Right(bets)
     }

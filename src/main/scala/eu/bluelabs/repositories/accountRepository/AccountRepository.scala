@@ -35,9 +35,7 @@ object AccountRepository extends Repository[Account] {
 
   }
 
-  override def getMany(
-      limit: Int
-    ): Future[Either[Throwable, Set[Account]]] = ???
+  override def getMany: Future[Either[Throwable, Set[Account]]] = ???
 
   override def createOne(
       item: Account
