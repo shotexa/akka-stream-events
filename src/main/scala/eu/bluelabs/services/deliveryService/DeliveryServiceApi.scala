@@ -1,5 +1,6 @@
 package eu.bluelabs
 package services
+package deliveryService
 
 import akka.actor.ActorSystem
 import scala.concurrent.Future

@@ -1,5 +1,6 @@
 package eu.bluelabs
 package services
+package accountService
 
 import scala.concurrent.ExecutionContext.Implicits._
 import scala.concurrent.Future

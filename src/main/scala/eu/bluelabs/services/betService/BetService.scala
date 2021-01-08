@@ -1,5 +1,6 @@
 package eu.bluelabs
 package services
+package betService
 
 import java.time.Instant
 import java.util.concurrent.atomic.AtomicReference

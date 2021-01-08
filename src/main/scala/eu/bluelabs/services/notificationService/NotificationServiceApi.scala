@@ -1,5 +1,7 @@
 package eu.bluelabs
 package services
+package notificationService
+
 import scala.concurrent.Future
 
 import entities._

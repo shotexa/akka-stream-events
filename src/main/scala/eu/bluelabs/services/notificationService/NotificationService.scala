@@ -1,9 +1,9 @@
 package eu.bluelabs
 package services
+package notificationService
 
 import scala.concurrent.ExecutionContext.Implicits._
 import scala.concurrent.Future
-import scala.concurrent.duration._
 
 import entities._
 

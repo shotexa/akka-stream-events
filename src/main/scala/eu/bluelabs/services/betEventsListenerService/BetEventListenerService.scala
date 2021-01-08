@@ -1,5 +1,6 @@
 package eu.bluelabs
 package services
+package betEventListenerService
 
 import scala.concurrent.ExecutionContext.Implicits._
 import scala.concurrent.Future
@@ -11,6 +12,10 @@ import akka.stream.scaladsl._
 
 import entities._
 import eventSources.EventSourcesApi
+import accountService._
+import betService._
+import notificationService._
+import outcomeService._
 
 class BetEventListenerService private (
     betService: BetServiceApi,

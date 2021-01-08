@@ -1,9 +1,9 @@
 package eu.bluelabs
 package services
+package outcomeService
 
 import scala.concurrent.ExecutionContext.Implicits._
 import scala.concurrent.Future
-import scala.concurrent.duration._
 
 import repositories.Repository
 import entities._

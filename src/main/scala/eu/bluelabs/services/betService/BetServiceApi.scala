@@ -1,10 +1,9 @@
 package eu.bluelabs
 package services
+package betService
 
 import java.time.Instant
-
 import scala.concurrent.Future
-
 import entities._
 
 trait BetServiceApi {

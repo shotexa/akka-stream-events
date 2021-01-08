@@ -6,7 +6,12 @@ import scala.util.Success
 
 import akka.actor.ActorSystem
 
-import services._
+import services.accountService._
+import services.betService._
+import services.outcomeService._
+import services.notificationService._
+import services.deliveryService._
+import services.betEventListenerService._
 import repositories._
 import entities._
 import eventSources.EventSources

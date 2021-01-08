@@ -1,5 +1,6 @@
 package eu.bluelabs
 package services
+package betEventListenerService
 
 import akka.actor.ActorSystem
 
