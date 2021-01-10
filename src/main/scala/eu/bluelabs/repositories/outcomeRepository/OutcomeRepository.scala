@@ -38,10 +38,6 @@ object OutcomeRepository extends Repository[Outcome] {
       item: Outcome
     ): Future[Either[Throwable, Outcome]] = ???
 
-  override def createMany(
-      items: Set[Outcome]
-    ): Future[Either[Throwable, Set[Outcome]]] = ???
-
   override def updateById(
       id: String
     )(

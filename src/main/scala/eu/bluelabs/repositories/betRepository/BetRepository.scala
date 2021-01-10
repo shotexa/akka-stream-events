@@ -47,10 +47,6 @@ object BetRepository extends Repository[Bet] {
     }
   }
 
-  override def createMany(
-      items: Set[Bet]
-    ): Future[Either[Throwable, Set[Bet]]] = ???
-
   override def updateById(
       id: String
     )(
@@ -60,15 +56,26 @@ object BetRepository extends Repository[Bet] {
       if (!bets.get.contains(id))
         Left(new Exception(s"Bet with an id of ${id} does not exists"))
       else {
+
         /**
-          * atomically update and get the bet
-          */
+         * atomically update and get the bet
+         */
         bets.updateAndGet { curr =>
           val bet = curr(id)
           curr.updated(id, update(bet))
         }
         Right(bets.get.apply(id))
       }
+    }
+    catch {
+      case err: Throwable => Left(err)
+    }
+  }
+
+  def truncate: Future[Either[Throwable, Unit]] = Future {
+    try {
+      bets.updateAndGet(curr => Map.empty[String, Bet])
+      Right {}
     }
     catch {
       case err: Throwable => Left(err)

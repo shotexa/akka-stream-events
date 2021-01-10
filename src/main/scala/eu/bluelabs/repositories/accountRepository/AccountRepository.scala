@@ -41,10 +41,6 @@ object AccountRepository extends Repository[Account] {
       item: Account
     ): Future[Either[Throwable, Account]] = ???
 
-  override def createMany(
-      items: Set[Account]
-    ): Future[Either[Throwable, Set[Account]]] = ???
-
   override def updateById(
       id: String
     )(
