@@ -52,7 +52,7 @@ object EventSources extends EventSourcesApi {
       .map(_.utf8String)
       .drop(1)
       .via(Util.randomize)
-      .via(Util.delayForEachBetween(1, 5)) //TODO: revert ot 1, 2000
+      .via(Util.delayForEachBetween(1, 2000))
       .viaMat(lineToPlacement)(Keep.right)
 
   override def betSettlementEvents: Source[BetSettlementEvent, NotUsed] =
@@ -64,6 +64,6 @@ object EventSources extends EventSourcesApi {
       .map(_.utf8String)
       .drop(1)
       .via(Util.randomize)
-      .via(Util.delayForEachBetween(1, 5)) // //TODO: revert ot 1, 2000
+      .via(Util.delayForEachBetween(1, 2000))
       .viaMat(lineToSettlement)(Keep.right)
 }
