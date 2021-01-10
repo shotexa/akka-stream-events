@@ -38,27 +38,28 @@ object Main extends App {
 
   val deliveryService: DeliveryServiceApi = DeliveryService(betService)
 
-  // betEventListenerService.onBetSettlementReceived {
-  //   case BetLost(betId, timestamp) =>
-  //     Log.info(s"Received bet lost event for bet -> $betId")
-  //   case BetWon(betId, timestamp) =>
-  //     Log.info(s"Received bet won event for bet -> $betId")
-  // }
-  // betEventListenerService.onBetPlacementReceived {
-  //   case event @ BetPlaced(betId, accountId, outcomeId, payout, timestamp) =>
-  //     Log.info(s"Received bet placement event: $event")
-  // }
+  betEventListenerService.onBetSettlementReceived {
+    case BetLost(betId, timestamp) =>
+      Log.info(s"Received bet lost event for bet -> $betId")
+    case BetWon(betId, timestamp) =>
+      Log.info(s"Received bet won event for bet -> $betId")
+  }
 
-  // betEventListenerService.onBetCreated {
-  //   case Left(err)  => Log.error(err.getMessage)
-  //   case Right(bet) => Log.success(s"Created bet ${bet.id}")
-  // }
+  betEventListenerService.onBetPlacementReceived {
+    case event @ BetPlaced(_, _, _, _, _) =>
+      Log.info(s"Received bet placement event: $event")
+  }
 
-  // betEventListenerService.onBetSettled {
-  //   case Left(err) => Log.error(err.getMessage)
-  //   case Right(bet) =>
-  //     Log.success(s"Settled the bet ${bet.id} with status ${bet.status}")
-  // }
+  betEventListenerService.onBetCreated {
+    case Left(err)  => Log.error(err.getMessage)
+    case Right(bet) => Log.success(s"Created bet ${bet.id}")
+  }
+
+  betEventListenerService.onBetSettled {
+    case Left(err) => Log.error(err.getMessage)
+    case Right(bet) =>
+      Log.success(s"Settled the bet ${bet.id} with status ${bet.status}")
+  }
 
   betEventListenerService.onBetPlacementsDrained {
     case None      => Log.success("Finished placing bets")
@@ -74,28 +75,28 @@ object Main extends App {
   betEventListenerService.startListeningTo(EventSources)(
     betEventListenerActorSystem
   )
-  val bindingFuture = deliveryService
+
+  deliveryService
     .connect("localhost", 8080)(
       httpServerActorSystem
     )
+    .onComplete {
+      case Success(binding) =>
+        val address = binding.localAddress
+        Log.info(
+          s"Server started at http://${address.getHostString}:${address.getPort}"
+        )
+        Log.info("Press ENTER to terminate")
+        io.StdIn.readLine()
+        binding.unbind().onComplete { _ =>
+          betEventListenerActorSystem.terminate()
+          httpServerActorSystem.terminate()
+        }
 
-  // bindingFuture.map { bindingOrErr =>
-  //   bindingOrErr match {
-  //     case Success(binding) =>
-  //       val address = binding.localAddress
-  //       Log.info(
-  //         s"Server started at http://${address.getHostString}:${address.getPort}"
-  //       )
-  //       Log.info("Press ENTER to terminate")
-  //       io.StdIn.readLine()
-  //       binding.unbind().onComplete { _ =>
-  //         betEventListenerActorSystem.terminate()
-  //         httpServerActorSystem.terminate()
-  //       }
+      case Failure(err) =>
+        Log.error(err.getMessage)
+        betEventListenerActorSystem.terminate()
+        httpServerActorSystem.terminate()
 
-  //     case Failure(err) =>
-  //       Log.error(err.getMessage)
-  //       httpServerActorSystem.terminate()
-  //   }
-  // }
+    }
 }

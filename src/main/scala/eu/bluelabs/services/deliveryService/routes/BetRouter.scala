@@ -43,17 +43,16 @@ class BetRouter private (betService: BetServiceApi)
         onComplete {
           betService
             .getAllBets
-            .map(_.map { set =>
-              val sorted =
-                set
+            .map(_.map { bets =>
+              val betsByAccount =
+                bets
                   .filter(_.account.id == accId)
                   .toSeq
                   .sortBy(_.id) { (a, b) =>
                     numericBetId(a) - numericBetId(b)
                   }
-
-              val bets =
-                sorted
+              val betsPaginated =
+                betsByAccount
                   .filter { bet: Bet =>
                     if (before.nonEmpty)
                       numericBetId(bet.id) < numericBetId(before.get)
@@ -63,11 +62,19 @@ class BetRouter private (betService: BetServiceApi)
                   }
                   .take(first)
 
-              (
-                numericBetId(bets.head.id) > numericBetId(sorted.head.id),
-                bets,
-                numericBetId(bets.last.id) < numericBetId(sorted.last.id)
-              )
+              if (betsPaginated.isEmpty) {
+                (false, Nil, false)
+              }
+              else
+                (
+                  numericBetId(betsPaginated.head.id) > numericBetId(
+                    betsByAccount.head.id
+                  ),
+                  betsPaginated,
+                  numericBetId(betsPaginated.last.id) < numericBetId(
+                    betsByAccount.last.id
+                  )
+                )
             })
         } {
           case Failure(err) => complete(InternalServerError, err.getMessage)
