@@ -77,7 +77,7 @@ object Main extends App {
   )
 
   deliveryService
-    .connect("localhost", 8080)(
+    .connect("0.0.0.0", 8080)(
       httpServerActorSystem
     )
     .onComplete {
