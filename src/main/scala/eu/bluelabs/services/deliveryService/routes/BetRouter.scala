@@ -61,6 +61,7 @@ class BetRouter private (betService: BetServiceApi)
                     else true
                   }
                   .take(first)
+                  .sortWith { (a, b) => a.timestamp.isAfter(b.timestamp) }
 
               if (betsPaginated.isEmpty) {
                 (false, Nil, false)
