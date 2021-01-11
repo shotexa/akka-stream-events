@@ -14,6 +14,8 @@ Once started, application will expose an HTTP endpoint on port `8080`.
 
 There is only one endpoint - `GET /bets/<account-id>` which will return a list of placed bets.
 
+Endpoint supports cursor-based pagination, bet id is the cursor.
+
 available query params
 
 * `first=<number>` - number of items to return, default 10
