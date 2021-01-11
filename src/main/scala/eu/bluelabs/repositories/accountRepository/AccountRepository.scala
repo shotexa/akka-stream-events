@@ -35,6 +35,13 @@ object AccountRepository extends Repository[Account] {
 
   }
 
+  /**
+    * I've left those 3 methods unimplemented 
+    * because there is not really a need for them in
+    * this test application, I can't remove them however because 
+    * Repository[Account] requires them. 
+    */
+
   override def getMany: Future[Either[Throwable, Set[Account]]] = ???
 
   override def createOne(

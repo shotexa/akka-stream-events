@@ -82,9 +82,8 @@ object Main extends App {
     )
     .onComplete {
       case Success(binding) =>
-        val address = binding.localAddress
         Log.info(
-          s"Server started at http://${address.getHostString}:${address.getPort}"
+          s"Server started at http://localhost:8080"
         )
         Log.info("Press ENTER to terminate")
         io.StdIn.readLine()
