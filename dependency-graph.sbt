@@ -3,7 +3,7 @@ import Util._
 val AkkaVersion     = "2.6.8"
 val AkkaHttpVersion = "10.2.2"
 
-lazy val root = project
+lazy val `bet-history` = project
   .in(file("."))
   .settings(
     libraryDependencies ++= appDependencies ++ baseDependencies
